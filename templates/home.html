@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/">
+    <style>
+      
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Open Sans', sans-serif;
+    }
+    body {
+      background: #E3F2FD;
+    }
+    h1 {
+      background: #29397c;
+      font-size: 1.75rem;
+      text-align: center;
+      padding: 18px 0;
+      color: #fff;
+    }
+    .container {
+      display: flex;
+      gap: 35px;
+      padding: 30px;
+    }
+
+
+    .weather-data {
+      width: 100%;
+    }
+    .weather-data .current-weather {
+      color: #fff;
+      background: #2b3c7e;
+      border-radius: 5px;
+      padding: 20px 70px 20px 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .current-weather h2 {
+      font-weight: 700;
+      font-size: 1.7rem;
+    }
+    .weather-data h6 {
+      margin-top: 12px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    .current-weather .icon {
+      text-align: center;
+    }
+    .current-weather .icon img {
+      max-width: 120px;
+      margin-top: -15px;
+    }
+    .current-weather .icon h6 {
+      margin-top: -10px;
+      text-transform: capitalize;
+    }
+    .days-forecast h2 {
+      margin: 20px 0;
+      font-size: 1.5rem;
+    }
+    .days-forecast .weather-cards {
+      display: flex;
+      gap: 20px;
+    }
+    .weather-cards .card {
+      color: #fff;
+      padding: 18px 16px;
+      list-style: none;
+      width: calc(100% / 5);
+      background: #056bc4;
+      border-radius: 5px;
+    }
+    .weather-cards .card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .weather-cards .card img {
+      max-width: 70px;
+      margin: 5px 0 -12px 0;
+    }
+
+
+    </style>
+  </head>
+  <body>
+    <h1>Smart Weather Monitoring Dashboard</h1>
+    <div class="container">
+      <div class="weather-data">
+        <div class="current-weather">
+          <div class="details">
+            <h2>Current Weather</h2>
+            <h6>Temperature: {{.Temperature0}}°C</h6>
+            <h6>Humidity: {{.Humidity0}}%</h6>
+          </div>
+        </div>
+        <div style="width:800px; height:400px">
+          <canvas id="myChart"></canvas>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <script>
+          const ctx = document.getElementById('myChart');
+        
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['{{.CurrentDate}}', '{{.PreviousDate1}}', '{{.PreviousDate2}}', '{{.PreviousDate3}}', '{{.PreviousDate4}}', '{{.PreviousDate5}}'],
+              datasets: [{
+                label: 'temperature over time',
+                data: ['{{.Temperature0}}','{{.Temperature1}}', '{{.Temperature2}}', '{{.Temperature3}}', '{{.Temperature4}}'],
+                borderWidth: 1,
+                pointStyle: 'circle',
+                pointRadius: 10,
+                pointHoverRadius: 15
+              },
+              {
+                label: "humidity over time",
+                data: ['{{.Humidity0}}','{{.Humidity1}}', '{{.Humidity2}}', '{{.Humidity3}}', '{{.Humidity4}}'],
+                borderWidth: 1,
+                pointStyle: 'circle',
+                pointRadius: 10,
+                pointHoverRadius: 15
+            }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        </script>
+        <div class="days-forecast">
+          <h2>Last 5 Days</h2>
+          <ul class="weather-cards">
+            <li class="card">
+              <h3>{{.PreviousDate1}}</h3>
+              <h6>Temperature: {{.Temperature1}}C</h6>
+              <h6>Humidity: {{.Humidity1}}%</h6>
+            </li>
+            <li class="card">
+              <h3>{{.PreviousDate2}}</h3>
+              <h6>Temperature: {{.Temperature2}}C</h6>
+              <h6>Humidity: {{.Humidity2}}%</h6>
+            </li>
+            <li class="card">
+              <h3>{{.PreviousDate3}}</h3>
+              <h6>Temperature: {{.Temperature3}}C</h6>
+              <h6>Humidity: {{.Humidity3}}%</h6>
+            </li>
+            <li class="card">
+              <h3>{{.PreviousDate4}}</h3>
+              <h6>Temperature: {{.Temperature4}}C</h6>
+              <h6>Humidity: {{.Humidity4}}%</h6>
+            </li>
+            <li class="card">
+              <h3>{{.PreviousDate5}}</h3>
+              <h6>Temperature:{{.Temperature5}}C</h6>
+              <h6>Humidity: {{.Humidity5}}%</h6>
+            </li>
+          </ul>
+        </div>
+
+        
+      </div>
+    </div>
+    
+  </body>
+</html>
